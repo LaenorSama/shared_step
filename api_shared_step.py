@@ -126,7 +126,6 @@ INSTANCE_NAME = "demo.qatools.cloud"
 load_dotenv()
 # Получаем токен из .env файла
 TESTOPS_TOKEN = os.getenv("TESTOPS_TOKEN")
-print(TESTOPS_TOKEN)
 BEARER_TOKEN = get_bearer_token(f"https://{INSTANCE_NAME}/api/", TESTOPS_TOKEN)
 
 # получаем имя тест-кейса
