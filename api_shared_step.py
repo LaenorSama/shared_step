@@ -39,6 +39,8 @@ def get_bearer_token(TESTOPS_API_URL, TESTOPS_TOKEN):
     else:
         print("Ошибка получения токена:", response.status_code, response.text)
 
+# функция получает название тест-кейса
+# возвращает переменную типа текст
 def get_testcase_name(INSTANCE_NAME, TESTCASE_ID):
     headers = {
         "Authorization": f"Bearer {BEARER_TOKEN}",
@@ -51,6 +53,8 @@ def get_testcase_name(INSTANCE_NAME, TESTCASE_ID):
     print(f'Название тест-кейса: {scenario_name}')
     return scenario_name
 
+# функция получается сценарий тест-кейса
+# возвращает список из шагов
 def get_testcase_scenario(INSTANCE_NAME, TESTCASE_ID):
     headers = {
         "Authorization": f"Bearer {BEARER_TOKEN}",
@@ -74,6 +78,8 @@ def get_testcase_scenario(INSTANCE_NAME, TESTCASE_ID):
 
     return steps
 
+# функция создает новый общий щаг
+# возвращает ID общего шага
 def post_create_sharedstep(INSTANCE_NAME, PROJECT_ID, SHAREDSTEP_NAME):
     headers = {
         "Authorization": f"Bearer {BEARER_TOKEN}",
@@ -91,6 +97,8 @@ def post_create_sharedstep(INSTANCE_NAME, PROJECT_ID, SHAREDSTEP_NAME):
     print(f'Создан общий щаг. ID = {sharedstep_id}')
     return sharedstep_id
 
+# функция добавляет в общий шаг сценарий из списка шагов
+# ничего не возвращает
 def post_create_scenario_for_sharedstep(INSTANCE_NAME, SHAREDSTEP_ID, TESTCASE_SCENARIO):
     headers = {
         "Authorization": f"Bearer {BEARER_TOKEN}",
@@ -120,8 +128,11 @@ load_dotenv()
 TESTOPS_TOKEN = os.getenv("TESTOPS_TOKEN")
 BEARER_TOKEN = get_bearer_token(f"https://{INSTANCE_NAME}/api/", TESTOPS_TOKEN)
 
+# получаем имя тест-кейса
 testcase_name = get_testcase_name(INSTANCE_NAME, TESTCASE_ID)
+# получаем сценарий тест-кейса
 testcase_scenario = get_testcase_scenario(INSTANCE_NAME, TESTCASE_ID)
-
+# создаем общий шаг
 sharedstep_id = post_create_sharedstep(INSTANCE_NAME, PROJECT_ID, testcase_name)
+# добавляем сценарий из списка шагов в общий шаг
 post_create_scenario_for_sharedstep(INSTANCE_NAME, sharedstep_id, testcase_scenario)
