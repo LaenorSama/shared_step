@@ -117,8 +117,8 @@ def post_create_scenario_for_sharedstep(instance_name, sharedstep_id, testcase_s
     return
 
 # объявляем нужные переменные
-PROJECT_ID = 184
-TESTCASE_ID = 1830
+PROJECT_ID = 282
+TESTCASE_ID = 2234
 INSTANCE_NAME = "demo.qatools.cloud"
 
 # Загружаем .env файл
